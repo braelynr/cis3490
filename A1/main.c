@@ -1,3 +1,8 @@
+/* Braelyn Rotman
+  1006740
+  February 8th, 2019
+  A1 main.c */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -33,7 +38,9 @@ int main(void)
   {
     printf("%d, ", set[j]);
   }*/
-  findInvBrute(set, i);
-  findInvMerge(set, i);
+  //findInvBrute(set, i);
+  //findInvMerge(set, i);
+  free(set);
+
   return 0;
 }

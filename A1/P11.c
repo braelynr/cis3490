@@ -17,10 +17,10 @@ void findInvBrute(int *set, int n)
   ftime(&start); // set start time
   for (i = 0 ; i < n ; i++)
   {
-    for (j = 0 ; j < n ; j++) 
+    for (j = i + 1 ; j < n ; j++) 
     {
       basicOp++;
-      if (i < j && set[i] > set[j]) // basic operation
+      if (set[i] > set[j]) // basic operation
       {
         inv++;
       }
