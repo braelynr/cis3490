@@ -1,7 +1,7 @@
 /* Braelyn Rotman
   1006740
   February 8th, 2019
-  A1 Q1.1 */
+  A2 Q1.1 */
 
 #include <stdio.h>
 #include <sys/timeb.h>
@@ -17,7 +17,7 @@ void findInvBrute(int *set, int n)
   ftime(&start); // set start time
   for (i = 0 ; i < n ; i++)
   {
-    for (j = i + 1 ; j < n ; j++) 
+    for (j = i + 1 ; j < n ; j++)
     {
       basicOp++;
       if (set[i] > set[j]) // basic operation

@@ -1,7 +1,7 @@
 /* Braelyn Rotman
   1006740
   February 10th, 2019
-  A1 Q2.1 */
+  A2 Q2.1 */
 
 
 #include <stdio.h>
@@ -14,6 +14,7 @@ typedef struct point{
   float y;
 } Point;
 
+unsigned long int basicOp = 0; // # basic operations
 Point *extreme;
 
 void sortExt(int n) // sort extreme by x
@@ -83,7 +84,6 @@ void convexBrute(Point *plane, int n)
   float equ;
   bool ex = false; // extreme points
   char side; // p or n
-  unsigned long int basicOp = 0; // # basic operations
 
   extreme = calloc(5, sizeof(Point));
   ftime(&start); // set start time
@@ -174,4 +174,5 @@ void convexBrute(Point *plane, int n)
     printf("%f %f\n", extreme[x].x, extreme[x].y);
   }
   printf("\n");
+  free(extreme);
 }

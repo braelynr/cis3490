@@ -1,7 +1,7 @@
 /* Braelyn Rotman
   1006740
   February 8th, 2019
-  A1 main.c */
+  A2 main.c */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,6 +14,7 @@ typedef struct point{
 void findInvBrute(int *set, int n);
 void findInvMerge(int *set, int n);
 void convexBrute(Point *plane, int n);
+void quickhull(Point *plane, int n);
 
 int main(void)
 {
@@ -22,7 +23,7 @@ int main(void)
   Point *plane;
   int i = 0;
   int size = 50;
-/*
+
   set = calloc(50, sizeof(int));
 
   fp = fopen("data_1.txt", "r");
@@ -41,12 +42,14 @@ int main(void)
     }
   }
   fclose(fp);
+  fp = NULL;
 
   findInvBrute(set, i);
   findInvMerge(set, i);
   free(set);
-  */
+  set = NULL;
 
+  i = 0;
   size = 50;
   plane = calloc(50, sizeof(Point));
 
@@ -67,12 +70,8 @@ int main(void)
   }
   fclose(fp);
 
-  /*for (int i = 0 ; i < 6; i++)
-  {
-    printf("%f %f\n", plane[i].x, plane[i].y);
-  }*/
-
   convexBrute(plane, i);
+  quickhull(plane, i);
   free(plane);
 
   return 0;
