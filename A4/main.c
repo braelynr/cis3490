@@ -8,18 +8,20 @@
 #include <string.h>
 
 typedef struct nodestruct {
-    char word[100];
+    char word[50];
     float prob;
     struct nodestruct *left;
     struct nodestruct *right;
 } Node;
 
+// Function prototypes
 void searchTree(char *unique[], float P[], int n);
 Node *greedyBST(Node *entries, int k);
 void searchTreeGreedy(Node *tree, char *needle);
 void printNode(Node *node);
 Node *initializeNode(char *word, float prob);
 int cmpProb(const void *a, const void *b);
+void deleteTree(Node *tree);
 
 static int compare(const void* a, const void* b) // for qsort
 {
@@ -33,12 +35,13 @@ int main(void) // use arguments to choose program i think and enter string
     char *text; // string of entire file
     int i = 0, j = 0, k = 0; // indexing
     int size = 0; // size malloced for text
+    int uSize = 601;
     char *key = calloc(50, sizeof(char));
     Node *tree;
 
-    Node entries[600]; // combined word + probability structure for tree
-    char *unique[601]; // array of unique words
-    float probs[601]; // array of probabilities
+    Node *entries; // combined word + probability structure for tree
+    char **unique; // array of unique words
+    float *probs; // array of probabilities
 
     for(i = 0 ; i < 2045 ; i++)
     {
@@ -92,10 +95,19 @@ int main(void) // use arguments to choose program i think and enter string
 
     qsort(words, 2045, sizeof(char *), compare); // sort array of words
 
+    unique = calloc(uSize, sizeof(char *));
+    probs = calloc(uSize, sizeof(float));
+
     j = 0;
     k = 1;
     for(i = 0 ; i < 2045 ; i++) // for each word in array
     {
+        if(k > uSize)
+        {
+          uSize = uSize  + 50;
+          unique = realloc(unique, sizeof(char *)*uSize);
+          probs = realloc(probs, sizeof(float)*uSize);
+        }
         unique[k] = words[i]; // copy into unique array
         probs[k] = 1; // 1 for first instance
         j = i + 1;
@@ -119,20 +131,27 @@ int main(void) // use arguments to choose program i think and enter string
         probs[i] = probs[i]/2045;
     }
 
-    searchTree(unique, probs, k);
+    searchTree(unique, probs, k); // run question 1
 
+    entries = calloc(k, sizeof(Node));
     for (int i = 0; i < k; i++) {
         entries[i].prob = probs[i + 1];
 	      strcpy(entries[i].word, unique[i + 1]);
     }
 
-    qsort(entries, k, sizeof(Node), cmpProb);
+    free(probs);
+    free(unique);
+
+    qsort(entries, k, sizeof(Node), cmpProb); // sort by probabilities
 
     tree = greedyBST(entries, k);
+    free(entries);
     printf("\n(Q2) Enter a key: ");
     scanf("%s", key);
-    searchTreeGreedy(tree, key);
+    searchTreeGreedy(tree, key); // run question 2
     free(key);
+
+    deleteTree(tree);
 
     // free array of words from file
     for(i = 0 ; i < 2045 ; i++)

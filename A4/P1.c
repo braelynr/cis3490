@@ -53,10 +53,10 @@ void optimalBST(float P[], int R[n+2][n+1], float C[n+2][n+1])
 void searchTree(char *unique[], float P[], int k)
 {
   int x = 0, y = 0;
-  int R[k+2][k+1];
-  float C[k+2][k+1];
-  int node = 0;
-  char *key = calloc(50, sizeof(char));
+  int R[k+2][k+1]; // root table
+  float C[k+2][k+1]; // cost table
+  int node = 0; // current value in "Tree" (root table)
+  char *key = calloc(50, sizeof(char)); // user input
 
   n = k;
 

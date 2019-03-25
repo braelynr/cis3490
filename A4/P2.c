@@ -7,20 +7,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct bst{
-  int key;
-  struct bst *left;
-  struct bst *right;
-}BST;
-
 typedef struct nodestruct {
-  char word[100];
+  char word[50];
   float prob;
   struct nodestruct *left;
   struct nodestruct *right;
 } Node;
 
-int cmpProb(const void *a, const void *b)
+int cmpProb(const void *a, const void *b) // for qsort
 {
   Node *nodeA = (Node *)a;
   Node *nodeB = (Node *)b;
@@ -36,7 +30,7 @@ int cmpProb(const void *a, const void *b)
   return 0;
 }
 
-Node *initializeNode(char *word, float prob)
+Node *initializeNode(char *word, float prob) // create node for tree
 {
     Node *temp = malloc(sizeof(Node));
     strcpy(temp->word, word);
@@ -46,7 +40,7 @@ Node *initializeNode(char *word, float prob)
     return temp;
 }
 
-void insert(Node **node, char *word, float prob)
+void insert(Node **node, char *word, float prob) // insert into tree
 {
   if (*node == NULL)
   {
@@ -69,7 +63,7 @@ void insert(Node **node, char *word, float prob)
 // function that finds an optimal binary search tree using the greedy technique
 Node *greedyBST(Node *entries, int k)
 {
-  Node *tree;
+  Node *tree = NULL;
 
   for (int i = 0; i < k; i++)
   {
@@ -103,4 +97,19 @@ void searchTreeGreedy(Node *tree, char *key)
     printf("Compared with %s (%.4f), go right subtree.\n", tree->word, tree->prob);
     searchTreeGreedy(tree->right, key);
   }
+}
+
+// Function to delete tree and free all data
+void deleteTree(Node *tree)
+{
+  if(tree == NULL)
+  {
+    return;
+  }
+  deleteTree(tree->left);
+  deleteTree(tree->right);
+
+  tree->left = NULL;
+  tree->right = NULL;
+  free(tree);
 }
